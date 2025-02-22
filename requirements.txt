@@ -1,0 +1,8 @@
+ultralytics
+opencv-python
+numpy
+torch
+deep_sort_realtime
+matplotlib
+pandas
+seaborn

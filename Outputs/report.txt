@@ -1,0 +1,12 @@
+Total Unique Vehicles Detected: 88
+
+Traffic Flow by ROI:
+Average Vehicles in Left ROI: 4.10
+Average Vehicles in Right ROI: 2.32
+
+Overall Traffic Status Distribution:
+Light: 1741 frames
+Moderate: 1511 frames
+Heavy: 431 frames
+
+Overall Traffic Condition: Moderate Traffic
