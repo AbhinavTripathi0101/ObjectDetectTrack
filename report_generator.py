@@ -9,7 +9,7 @@ def generate_report():
     os.makedirs(config.OUTPUT_DIR, exist_ok=True)
 
     if not os.path.exists(config.OUTPUT_CSV_PATH):
-        print("❌ Error: Output CSV file not found. Run `main.py` first.")
+        print(" Error: Output CSV file not found. Run `main.py` first.")
         return
 
     df = pd.read_csv(config.OUTPUT_CSV_PATH)
@@ -49,7 +49,7 @@ def generate_report():
         # **Overall Traffic Condition**
         f.write("\nOverall Traffic Condition: " + overall_traffic_condition + "\n")
 
-    print(f"✅ Traffic report generated successfully: {config.OUTPUT_REPORT_PATH}")
+    print(f" Traffic report generated successfully: {config.OUTPUT_REPORT_PATH}")
 
 
 if __name__ == "__main__":

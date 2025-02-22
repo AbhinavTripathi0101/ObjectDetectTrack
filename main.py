@@ -7,16 +7,16 @@ from reporting import save_report
 import config
 
 # Load YOLO Model
-print("🔄 Loading YOLO Model...")
+print(" Loading YOLO Model...")
 model = load_yolo_model()
-print("✅ YOLO Model Loaded Successfully!")
+print(" YOLO Model Loaded Successfully!")
 
 tracker = Tracker()
 frame_number = 0
 
 cap = cv2.VideoCapture(config.INPUT_VIDEO_PATH)
 if not cap.isOpened():
-    print("❌ Error: Unable to open input video file.")
+    print(" Error: Unable to open input video file.")
     exit(1)
 
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
