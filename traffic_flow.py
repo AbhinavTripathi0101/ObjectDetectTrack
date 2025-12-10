@@ -1,9 +1,16 @@
-def analyze_traffic(tracked_objects):
+
+def analyze_traffic(tracked_objects, frame_width):
+    """
+    Analyze traffic by separating tracked objects into left/right based on box center.
+    frame_width: width of the frame in pixels (use frame.shape[1] when calling).
+    """
     left_count, right_count = 0, 0
 
     for obj in tracked_objects:
-        x, _, w, _ = obj.to_tlbr()
-        if x + w/2 < 640:
+        
+        x1, y1, x2, y2 = obj.to_tlbr()
+        center_x = (x1 + x2) / 2.0
+        if center_x < (frame_width / 2.0):
             left_count += 1
         else:
             right_count += 1

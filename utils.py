@@ -1,28 +1,47 @@
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
-import config  # Import configuration
-
+import config  
 
 def load_yolo_model():
-    """Load YOLOv11 model using Ultralytics."""
-    model = YOLO(config.YOLO_MODEL_TYPE)  # Load YOLO model
+    """Load YOLO model using Ultralytics."""
+    model = YOLO(config.YOLO_MODEL_TYPE)
     return model
 
-
 def preprocess_frame(frame, model):
-    """Run YOLO model on a frame and extract vehicle detections."""
-    results = model(frame)  # Perform detection
+    """Run YOLO model on a frame and extract vehicle detections.
+
+    Returns detections as [x1, y1, x2, y2, conf, cls].
+    Accepts any class present in config.CLASS_NAMES mapping.
+    """
+    results = model(frame) 
     detections = []
 
     for result in results:
-        boxes = result.boxes  # Extract bounding boxes
+        boxes = getattr(result, "boxes", [])
         for box in boxes:
-            x1, y1, x2, y2 = box.xyxy[0].tolist()  # Get bounding box coordinates
-            conf = box.conf[0].item()  # Confidence score
-            cls = int(box.cls[0].item())  # Class ID
+            
+            try:
+                coords = box.xyxy[0].tolist()
+            except Exception:
+                
+                coords = [float(box[0]), float(box[1]), float(box[2]), float(box[3])]
 
-            if conf > config.CONFIDENCE_THRESHOLD and cls == 2:  # Vehicle class
-                detections.append([x1, y1, x2, y2, conf, cls])  # Include class_id!
+            x1, y1, x2, y2 = [float(v) for v in coords]
+            
+            try:
+                conf = float(box.conf[0].item())
+            except Exception:
+                conf = float(box.conf)
+
+            try:
+                cls = int(box.cls[0].item())
+            except Exception:
+                cls = int(box.cls)
+
+           
+            if conf > config.CONFIDENCE_THRESHOLD and cls in config.CLASS_NAMES:
+                detections.append([x1, y1, x2, y2, conf, cls])
 
     return detections
